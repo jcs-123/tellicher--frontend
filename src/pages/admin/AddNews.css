@@ -1,0 +1,47 @@
+/* AddNews.css */
+
+form {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+form .form-group {
+  margin-bottom: 10px !important;
+}
+
+form label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+form .form-control,
+form .form-select {
+  height: 32px !important;
+  font-size: 13px;
+  padding: 2px 8px !important;
+  border: 1px solid #ced4da;
+}
+
+form textarea.form-control {
+  height: auto !important;
+  font-size: 13px;
+  padding: 4px 8px !important;
+}
+
+form .form-text {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+form .form-check-label {
+  font-size: 13px;
+}
+
+button[type="submit"] {
+  margin-top: 12px;
+  font-size: 13px;
+  padding: 4px 16px;
+}

@@ -1,0 +1,20 @@
+.admin-news-container {
+  padding: 1.5rem;
+  background: #f9f9f9;
+}
+
+.filter-box {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+.filter-box select,
+.filter-box input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

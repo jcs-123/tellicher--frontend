@@ -1,0 +1,118 @@
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer Container */
+.footer-section {
+  background-color: #2a2a2a;
+  padding: 40px 0 20px;
+  font-size: 14px;
+  animation: fadeInUp 1s ease-out both;
+}
+
+/* Fade-in columns with delay */
+.footer-contact,
+.footer-form,
+.footer-social {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.footer-contact {
+  animation-delay: 0.3s;
+}
+.footer-form {
+  animation-delay: 0.6s;
+}
+.footer-social {
+  animation-delay: 0.9s;
+}
+
+/* Contact Info */
+.footer-contact p {
+  margin: 0 0 8px;
+  color: #ddd;
+}
+.footer-contact h5 {
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+.footer-contact strong {
+  font-size: 28px;
+  color: #ccc;
+}
+.footer-contact .text-danger {
+  font-size: 18px;
+}
+
+/* Form Styles */
+.footer-form input,
+.footer-form textarea {
+  background-color: #444;
+  border: 1px solid #666;
+  color: #fff;
+}
+.footer-form input::placeholder,
+.footer-form textarea::placeholder {
+  color: #ccc;
+}
+.footer-form button {
+  background-color: #666;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+.footer-form button:hover {
+  background-color: #888;
+}
+
+/* Social Section */
+.footer-social h5 {
+  margin-bottom: 12px;
+}
+
+/* Instagram Link Styles */
+.insta-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 100%);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.insta-link:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+.insta-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+}
+.insta-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.insta-sub {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Footer Credit */
+a.text-info {
+  text-decoration: none;
+}
+a.text-info:hover {
+  text-decoration: underline;
+}

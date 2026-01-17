@@ -1,0 +1,71 @@
+/* Custom styles for PresbyteralCouncil.jsx */
+
+.accordion-item-custom {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    /* spacing between accordion items */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Highlight active accordion header */
+.active-accordion .accordion-button {
+    background-color: maroon !important;
+    color: white !important;
+}
+
+/* Regular accordion header */
+.accordion-button {
+    color: black;
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+/* Table header style */
+.custom-table thead tr th {
+    background-color: #800000;
+    color: white;
+    text-align: center;
+}
+
+.custom-table td img {
+    border: 1px solid #ddd;
+    padding: 2px;
+    background: #fff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .custom-table thead {
+        font-size: 12px;
+    }
+
+    .custom-table tbody td {
+        font-size: 12px;
+    }
+
+    .accordion-button {
+        font-size: 14px;
+    }
+
+    .search-group {
+        width: 100% !important;
+    }
+}
+
+.sidebar-wrapper {
+    width: 300px;
+}
+
+@media (max-width: 768px) {
+    .sidebar-wrapper {
+        display: none;
+        /* Hide sidebar on small devices */
+    }
+
+    .content-wrapper {
+        padding: 1rem !important;
+        width: 100%;
+    }
+}

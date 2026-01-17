@@ -1,0 +1,94 @@
+/* Wrapper */
+.committees-wrapper {
+  display: flex;
+  min-height: 100vh;
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+/* Sidebar */
+.sidebar-wrapper {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 1rem;
+}
+
+/* Content */
+.content-wrapper {
+  flex-grow: 1;
+}
+
+/* Sidebar Button */
+.sidebar-btn {
+  background-color: white;
+  border: 2px solid #dcdcdc;
+  padding: 10px 15px;
+  font-weight: 600;
+  text-align: center;
+  color: #000;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sidebar-btn.active {
+  color: #e6192c;
+  border: 2px solid #e6192c;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Accordion Header - when open */
+.accordion-button.active-header {
+  background-color: maroon !important;
+  color: white !important;
+}
+
+.accordion-button.active-header::after {
+  filter: brightness(0) invert(1); /* make arrow white */
+}
+/* ✅ Default accordion header style (collapsed) */
+.accordion-button {
+  background-color: #d0e3ff; /* Light blue */
+  color: #000;
+  font-weight: bold;
+}
+
+/* ✅ OPEN/ACTIVE header style */
+.accordion-button:not(.collapsed) {
+  background-color: maroon !important;
+  color: white !important;
+}
+
+/* ✅ Icon turns white when open */
+.accordion-button:not(.collapsed)::after {
+  filter: brightness(0) invert(1);
+}
+
+/* ✅ Table headers in maroon */
+.custom-table thead tr th {
+  background-color: #800000 !important;
+  color: white !important;
+  text-align: center;
+}
+
+/* ✅ Accordion item spacing and border */
+.accordion-item {
+  border: 4px solid #800000;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    display: none;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    padding: 1rem !important;
+  }
+}

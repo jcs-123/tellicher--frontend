@@ -1,0 +1,15 @@
+.our-patron-page {
+  background-color: #f9f9f9;
+  min-height: 80vh;
+}
+
+.section-title {
+  font-size: 20px;
+}
+
+p {
+  text-align: justify;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #222;
+}

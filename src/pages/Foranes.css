@@ -1,0 +1,34 @@
+/* src/pages/Foranes.css */
+
+.forane-box {
+  display: flex;
+  background-color: #fff;
+  border: 3px double #ccc; /* Double border effect */
+  border-radius: 5px;
+  padding: 10px;
+  height: 100%;
+}
+
+.forane-image-wrapper {
+  flex-shrink: 0;
+  width: 130px;
+  height: 140px;
+  overflow: hidden;
+  margin-right: 12px;
+  border-radius: 4px;
+}
+
+.forane-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.forane-content {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.forane-content p {
+  margin-bottom: 4px;
+}

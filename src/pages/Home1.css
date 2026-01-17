@@ -1,0 +1,7 @@
+.sticky-pay-button {
+  transition: all 0.3s ease;
+}
+
+.sticky-pay-button.visible {
+  pointer-events: auto;
+}

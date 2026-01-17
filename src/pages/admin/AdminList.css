@@ -1,0 +1,37 @@
+.table-responsive {
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+.table thead th {
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background-color: #0e4ba7;
+  color: white;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  font-size: 0.85em;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+.empty-state-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #6c757d;
+}

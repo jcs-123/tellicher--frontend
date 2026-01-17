@@ -1,0 +1,36 @@
+/* Table Header */
+.priest-table thead.custom-header {
+  background-color: #8b0c0c; /* dark red */
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Full width table */
+.priest-table {
+  width: 100% !important;
+  table-layout: fixed;   /* Equal column width */
+  border: 2px solid #ccc;
+}
+
+/* Wrap text to avoid horizontal scroll */
+.priest-table td,
+.priest-table th {
+  padding: 10px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  word-wrap: break-word;
+  white-space: normal;  /* text wraps instead of overflowing */
+}
+
+/* Alternate row color */
+.priest-table tbody tr:nth-child(odd) {
+  background-color: #fdf5f5;
+}
+
+/* Hover effect */
+.priest-table tbody tr:hover {
+  background-color: #f3e6e6;
+  cursor: pointer;
+}

@@ -1,0 +1,79 @@
+/* src/pages/Priests.css */
+
+.priest-table-wrapper {
+  border: 3px double #8B1A1A;
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.priest-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.94rem;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.priest-table thead th {
+  background-color: #8B1A1A;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #8B1A1A;
+  font-weight: 600;
+}
+
+.priest-table tbody td {
+  padding: 10px 14px;
+  vertical-align: top;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #333;
+}
+
+.table-row-alt td {
+  background-color: #f9f9f9;
+}
+
+.priest-table tbody tr:hover td {
+  background-color: #fff1f1;
+  transition: 0.2s ease;
+}
+
+/* Search Input */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #8B1A1A;
+  font-size: 0.9rem;
+}
+/* Dotted line for each detail */
+.detail-line {
+  border-bottom: 1px dotted #999;
+  padding: 3px 0;
+  margin: 2px 0;
+}
+
+/* Section header (Service History) */
+.section-header {
+  background-color: #666;
+  color: white;
+  padding: 8px 12px;
+  font-weight: bold;
+}
+
+/* Social icons */
+.social-icons a {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 18px;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #8b0c0c;
+}

@@ -1,0 +1,106 @@
+/* src/pages/ParishDetail.css */
+.parish-main-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.parish-details p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.parish-details strong {
+  color: #333;
+  min-width: 140px;
+  display: inline-block;
+}
+
+.quick-stats-box {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid #e9ecef;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #dc3545;
+}
+
+.parish-nav-tabs {
+  display: flex;
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.nav-tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.3s;
+}
+
+.nav-tab:hover {
+  color: #dc3545;
+}
+
+.nav-tab.active {
+  color: #dc3545;
+  border-bottom-color: #dc3545;
+}
+
+.table-footer {
+  border-top: 1px solid #dee2e6;
+}
+
+.pagination .btn {
+  min-width: 40px;
+  padding: 5px 10px;
+}
+
+/* Ensure table matches screenshot exactly */
+.parish-main-card .card-body {
+  background: #fff;
+}
+
+.table-danger th {
+  background-color: #dc3545;
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(220, 53, 69, 0.05);
+}

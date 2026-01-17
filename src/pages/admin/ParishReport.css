@@ -1,0 +1,9 @@
+.parish-report {
+    text-align: left;
+}
+
+.compact-table th, 
+.compact-table td {
+    text-align: left;
+    vertical-align: middle;
+}

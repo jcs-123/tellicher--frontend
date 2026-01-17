@@ -1,0 +1,65 @@
+.timeline {
+  position: relative;
+  padding: 10px 0; /* Less vertical padding */
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px; /* Thicker line */
+  background: #b3001b; /* Darker red for more contrast */
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px; /* Reduced gap between items */
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item.left {
+  justify-content: flex-start;
+}
+
+.timeline-item.right {
+  justify-content: flex-end;
+}
+
+.timeline-card {
+  max-width: 45%;
+  z-index: 2;
+  background-color: #fff;
+  border-left: 5px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  padding: 10px 15px;
+}
+
+.timeline-item.left .timeline-card {
+  border-left-color: #b3001b; /* Match new bold color */
+  margin-right: auto;
+}
+
+.timeline-item.right .timeline-card {
+  border-right: 5px solid #b3001b;
+  margin-left: auto;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;         /* Bigger dot */
+  height: 20px;
+  background: #b3001b; /* Darker red */
+  border-radius: 50%;
+  border: 3px solid #fff;
+  z-index: 3;
+  box-shadow: 0 0 0 3px #b3001b; /* Make dot bolder */
+}

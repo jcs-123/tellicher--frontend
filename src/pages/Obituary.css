@@ -1,0 +1,21 @@
+/* Table header style */
+/* Force table header background to red */
+.obituary-table thead th {
+  background-color: #b30000 !important; /* 🔴 Deep red */
+  color: #fff !important;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+/* Alternating row background */
+.table-row-alt {
+  background-color: #f9f9f9;
+}
+
+/* Table cell borders */
+.obituary-table td,
+.obituary-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

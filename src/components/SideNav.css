@@ -1,0 +1,46 @@
+/* Sidebar Wrapper - align buttons to the left */
+.side-nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* ✅ Align all buttons to the left */
+  gap: 10px;
+  padding: 20px;
+}
+
+/* Sidebar Button Styling */
+.sidenav-btn {
+  display: block;
+  width: 240px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  border: 2px solid #d72638;
+  color: #d72638;
+  border-radius: 8px;
+  text-align: center;
+  /* You can change to 'left' if desired */
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  /* <-- Add this line */
+  /* ❌ Removed margin: 0 auto; */
+}
+
+/* Hover and Active Styling */
+.sidenav-btn:hover,
+.sidenav-btn.active {
+  background-color: #d72638;
+  color: white;
+  border-color: #d72638;
+}
+
+
+/* Hide sidebar on smaller screens */
+@media (max-width: 768px) {
+  .side-nav-wrapper {
+    display: none !important;
+  }
+}

@@ -1,0 +1,36 @@
+/* Highlight active accordion header */
+.accordion-item.active-accordion .accordion-button {
+  background-color: maroon !important;
+  color: white !important;
+}
+
+/* Table header color */
+.custom-table thead tr th {
+  background-color: #800000 !important;
+  color: white !important;
+  text-align: center;
+}
+
+/* Accordion header base style */
+.accordion-button {
+  background-color: #d0e3ff; /* Light blue */
+  color: #000;
+  font-weight: bold;
+}
+
+/* Accordion spacing */
+.accordion-item {
+  border: 4px solid #800000;
+  border-radius: 5px;
+  margin-bottom: 15px; /* spacing between accordions */
+}
+
+/* Icon size in accordion header */
+.accordion-button .bi {
+  font-size: 1.2rem;
+}
+
+/* Remove default focus glow */
+.accordion-button:not(.collapsed):focus {
+  box-shadow: none;
+}
