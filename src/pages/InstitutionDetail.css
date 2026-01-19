@@ -1,0 +1,6 @@
+.institution-detail p {
+  border-bottom: 1px dotted #ccc;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}

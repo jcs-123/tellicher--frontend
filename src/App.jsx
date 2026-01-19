@@ -112,6 +112,7 @@ import ImportData from './pages/admin/ImportData';
 import PriestDetail from './pages/PriestDetail';
 import ParishDetail from './pages/ParishDetail';
 import DataViewer from './pages/admin/DataViewer';
+import InstitutionDetail from './pages/InstitutionDetail';
 
 function App() {
   const location = useLocation();
@@ -228,6 +229,8 @@ function App() {
        <Route path="/priests/:id" element={<PriestDetail />} />
        <Route path="/admin/tools/import" element={<ImportData />} />
        <Route path="/parish/:id" element={<ParishDetail />} />
+       <Route path="/institutions/:id" element={<InstitutionDetail />} />
+       <Route path="/institution/charitable" element={<SocialCharitableInstitutions />} />
 
 
 

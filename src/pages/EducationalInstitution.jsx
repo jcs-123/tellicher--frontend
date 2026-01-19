@@ -1,117 +1,161 @@
-import React from "react";
-import buildingImage from "../assets/building.jpg"; // use consistent image
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import SideNavInstitution from "../components/SideNavInstitution";
-import { FaSearch, FaUser, FaMapMarkerAlt, FaUniversity } from "react-icons/fa";
+import buildingImage from "../assets/building.jpg";
+import {
+    FaSearch,
+    FaUser,
+    FaMapMarkerAlt,
+    FaUniversity
+} from "react-icons/fa";
+import "./EducationalInstitutions.css";
 
-const institutions = [
-    {
-        name: "Vimal Jyothi Engineering College",
-        principal: "Fr. James Chell...",
-        location: "Chemperi",
-        type: "Diocese"
-    },
-    {
-        name: "Nirmalagiri College",
-        principal: "Fr. Thomas Koch...",
-        location: "Nirmalagiri",
-        type: "Diocese"
-    },
-    {
-        name: "Sanjose Metropolitan Senior Secondary Sc..",
-        principal: "Fr. Joseph Kakk...",
-        location: "Thalassery",
-        type: "Diocese"
-    },
-    {
-        name: "Malanadu Teacher Training Institute",
-        principal: "Fr. Paul Edathi...",
-        location: "Thaliparamba",
-        type: "Diocese"
-    }
-];
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
 
 const EducationalInstitutions = () => {
+    const [institutions, setInstitutions] = useState([]);
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        fetchInstitutions();
+    }, [search]);
+
+    const fetchInstitutions = async () => {
+        try {
+            setLoading(true);
+
+            const res = await axios.get(`${API_URL}/institutions`, {
+                params: { search }
+            });
+
+            if (res.data.success) {
+                // ✅ FRONTEND FILTER
+                const educationalInstitutions = res.data.data.filter(
+                    inst => inst.web_institution_type_id === "Educational Institutions"
+                );
+
+                setInstitutions(educationalInstitutions);
+            }
+
+        } catch (error) {
+            console.error("Error fetching institutions:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // ✅ MANAGEMENT TYPE FROM DB
+    const getManagementType = (inst) => {
+        if (inst.mgmnt_name && inst.mgmnt_name.trim() !== "") {
+            return inst.mgmnt_name;
+        }
+        if (inst.mgmnt_type && inst.mgmnt_type.trim() !== "") {
+            return inst.mgmnt_type;
+        }
+        return "—";
+    };
+
     return (
-        <div className="container-fluid">
+        <div className="container-fluid py-3">
             <div className="row">
+
                 {/* Sidebar */}
                 <div className="col-md-3 mb-3">
                     <SideNavInstitution />
                 </div>
 
-                {/* Main Content */}
-                <div className="col-md-9" style={{ padding: "2rem" }}>
-                    {/* Title */}
-                    <h3 style={{ color: "#dc3545", fontWeight: "bold", marginBottom: "1.5rem" }}>
-                        EDUCATIONAL INSTITUTIONS
-                    </h3>
+                {/* Content */}
+                <div className="col-md-9">
 
-                    {/* Filters + Search */}
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexWrap: "wrap",
-                            alignItems: "center",
-                            gap: "1rem",
-                            marginBottom: "1.5rem"
-                        }}
-                    >
-                        {/* Filter Buttons */}
-                        <div className="btn-group">
-                            <button className="btn btn-danger text-white">◉ Name</button>
-                            <button className="btn btn-danger text-white">◉ Place</button>
-                            <button className="btn btn-danger text-white">◉ Management</button>
-                        </div>
+                    {/* Header */}
+                    <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                        <h4 className="section-title">
+                            EDUCATIONAL INSTITUTIONS
+                        </h4>
 
                         {/* Search */}
-                        <div style={{ display: "flex" }}>
+                        <div className="d-flex">
                             <input
-                                type="text"
                                 className="form-control"
-                                placeholder="Search Institution by Institution Name"
-                                style={{ maxWidth: "300px" }}
+                                placeholder="Search by Institution / Place / Father"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                style={{ width: 260 }}
                             />
-                            <button className="btn btn-danger">
+                            <button className="btn btn-danger ms-2">
                                 <FaSearch />
                             </button>
                         </div>
                     </div>
 
-                    {/* Cards */}
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                        {institutions.map((inst, idx) => (
-                            <div className="col d-flex" key={idx}>
-                                <div
-                                    className="card shadow-sm h-100"
-                                    style={{
-                                        width: "100%",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "space-between"
-                                    }}
-                                >
-                                    <img src={buildingImage} className="card-img-top" alt="institution" />
-                                    <div className="card-body" style={{ padding: "1rem" }}>
-                                        <h6 className="card-title fw-bold">{inst.name}</h6>
-                                        <p className="mb-1">
-                                            <FaUser className="text-danger me-2" />
-                                            {inst.principal}
-                                        </p>
-                                        <p className="mb-1">
-                                            <FaMapMarkerAlt className="text-danger me-2" />
-                                            {inst.location}
-                                        </p>
-                                        <p className="mb-0">
-                                            <FaUniversity className="text-danger me-2" />
-                                            {inst.type}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    {/* Loader */}
+                    {loading ? (
+                        <div className="text-center py-5">
+                            <div className="spinner-border text-danger" />
+                        </div>
+                    ) : (
+                        <div className="row g-4">
 
+                            {institutions.length > 0 ? (
+                                institutions.map((inst) => (
+                                    <div
+                                        className="col-sm-6 col-md-6 col-lg-4 col-xl-3"
+                                        key={inst._id}
+                                    >
+                                        <div className="institution-card h-100">
+
+                                            {/* Image */}
+                                            <img
+                                                src={buildingImage}
+                                                alt={inst.name}
+                                                className="institution-img"
+                                            />
+
+                                            {/* Body */}
+                                            <div className="institution-body">
+
+                                                {/* ✅ CLICKABLE NAME */}
+                                                <h6 className="institution-name">
+                                                    <Link
+                                                        to={`/institutions/${inst._id}`}
+                                                        state={{ from: "educational" }}
+                                                        className="text-decoration-none"
+                                                    >
+                                                        <h6 className="institution-name">{inst.name}</h6>
+                                                    </Link>
+
+                                                </h6>
+
+                                                <div className="institution-row">
+                                                    <FaUser className="icon" />
+                                                    <span>Fr. {inst.head || "—"}</span>
+                                                </div>
+
+                                                <div className="institution-row">
+                                                    <FaMapMarkerAlt className="icon" />
+                                                    <span>{inst.place || "—"}</span>
+                                                </div>
+
+                                                <div className="institution-row">
+                                                    <FaUniversity className="icon" />
+                                                    <span>{getManagementType(inst)}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center text-muted py-5">
+                                    No educational institutions found
+                                </div>
+                            )}
+
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

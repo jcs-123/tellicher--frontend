@@ -227,7 +227,7 @@ const NavbarComponent = () => {
                 </div>
 
                 {/* CONGREGATIONS Dropdown */}
-                <div className="nav-box nav-dropdown-custom">
+                {/* <div className="nav-box nav-dropdown-custom">
                   <span className="dropdown-title">CONGREGATIONS <span className="red-dot">●</span></span>
                   <div className="dropdown-menu-custom">
                     <div className="dropdown-item-with-submenu">
@@ -237,7 +237,7 @@ const NavbarComponent = () => {
                       <Link to="/religious-women" className="submenu-link" onClick={() => setExpanded(false)}>For Women</Link>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="nav-box nav-dropdown-custom downloads-dropdown">
                   <span className="dropdown-title">DOWNLOADS <span className="red-dot">●</span></span>
                   <div className="dropdown-menu-custom">
