@@ -1,90 +1,130 @@
-// src/pages/ParishDetail.jsx
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Table, Spinner, Alert, Button, Form } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
-import SideNavParish from '../components/SideNavParish';
-import './ParishDetail.css';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Table,
+  Spinner,
+  Alert,
+  Button,
+  Form,
+  Image,
+} from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import SideNavParish from "../components/SideNavParish";
+import "./ParishDetail.css";
+
+const API_BASE = "http://localhost:5000";
+
+/* ===============================
+   CURRENT PRIEST LOGIC
+   =============================== */
+const isCurrentPriest = (p) => {
+  return p?.is_current === true || !p?.end_date;
+};
 
 const ParishDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [parish, setParish] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [currentPriest, setCurrentPriest] = useState(null);
+  const [formerPriests, setFormerPriests] = useState([]);
+
+  const [activeTab, setActiveTab] = useState("overview");
   const [entriesToShow, setEntriesToShow] = useState(10);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Mock data for former priests (you'll need to add this to your backend)
-  const formerPriestsData = [
-    { from: '02/02/1991', to: '07/05/1993', name: 'Fr. Vadakkemuriyil Thomas', designation: 'VICAR', home_parish: 'PERAVOOR' },
-    { from: '08/05/1993', to: '04/11/1995', name: 'Fr. Mundaplackal Kuriakose', designation: 'VICAR', home_parish: 'KONNAKKAD' },
-    { from: '04/11/1995', to: '16/05/1998', name: 'Fr. Kalarickal Kuriakose', designation: 'VICAR', home_parish: 'PAISAKARY' },
-    { from: '17/05/1998', to: '19/05/2001', name: 'Fr. Parathepathickal Antony', designation: 'VICAR', home_parish: 'THAYYENI' },
-    { from: '20/05/2001', to: '22/05/2004', name: 'Fr. Mundolickal John', designation: 'VICAR', home_parish: 'PULIKKURUMBA' },
-    { from: '23/05/2004', to: '26/02/2006', name: 'Fr. Parappalliyath Martin', designation: 'PRO-VICAR', home_parish: 'VAYATTUPARAMBA' },
-    { from: '26/02/2006', to: '23/05/2009', name: 'Fr. Kalarinuriyil George', designation: 'PRO-VICAR', home_parish: 'KANNIVAYAL' },
-    { from: '24/05/2009', to: '18/05/2013', name: 'Fr. Kovattu George', designation: 'VICAR', home_parish: 'PAISAKARY' },
-    { from: '19/05/2013', to: '11/05/2019', name: 'Fr. Nooranmackal Joseph', designation: 'PRO-VICAR', home_parish: 'PATHENPARA' },
-    { from: '12/05/2019', to: '10/05/2025', name: 'Fr. Nellithanathi Dennis', designation: 'PRO-VICAR', home_parish: 'THAJAPRANMARC' },
-    { from: '11/05/2025', to: 'Present', name: 'Fr. George', designation: 'VICAR', home_parish: 'ADAMPARA' },
-    { from: '01/01/2020', to: '10/05/2025', name: 'Fr. John Mathew', designation: 'ASSISTANT VICAR', home_parish: 'KANNUR' }
-  ];
-
+  /* ===============================
+     FETCH PARISH
+  =============================== */
   useEffect(() => {
-    const fetchParishDetail = async () => {
+    const fetchParish = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/import/parishes/${id}`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch parish details');
-        }
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          setParish(result.data);
-        } else {
-          throw new Error('Parish not found');
-        }
-      } catch (error) {
-        console.error('Error fetching parish details:', error);
-        setError(error.message);
+        const res = await fetch(`${API_BASE}/api/import/parishes/${id}`);
+        const json = await res.json();
+        if (!json.success) throw new Error("Parish not found");
+        setParish(json.data);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
-    if (id) {
-      fetchParishDetail();
-    }
+    fetchParish();
   }, [id]);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.getFullYear().toString();
-  };
+  /* ===============================
+     FETCH PRIEST HISTORY
+  =============================== */
+  useEffect(() => {
+    if (!parish?.name) return;
 
-  // Filter former priests based on search
-  const filteredPriests = formerPriestsData.filter(priest =>
-    priest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    priest.designation.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    priest.home_parish.toLowerCase().includes(searchTerm.toLowerCase())
+    const fetchHistory = async () => {
+      try {
+        setHistoryLoading(true);
+
+        const res = await fetch(
+          `${API_BASE}/api/import/priest-histories?limit=5000`
+        );
+        const json = await res.json();
+
+        const matched = (json.data || []).filter(
+          (p) =>
+            p.category_id &&
+            p.category_id.trim().toLowerCase() ===
+              parish.name.trim().toLowerCase()
+        );
+
+        const current =
+          matched.find((p) => isCurrentPriest(p)) || null;
+
+        const former = matched.filter((p) => !isCurrentPriest(p));
+
+        setCurrentPriest(current);
+        setFormerPriests(former);
+      } catch (err) {
+        console.error(err);
+        setCurrentPriest(null);
+        setFormerPriests([]);
+      } finally {
+        setHistoryLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, [parish]);
+
+  /* ===============================
+     HELPERS
+  =============================== */
+  const formatDate = (d) =>
+    d ? new Date(d).toLocaleDateString() : "—";
+
+  const filteredFormer = formerPriests.filter(
+    (p) =>
+      p.priest_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.designation?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const currentPagePriests = filteredPriests.slice(0, entriesToShow);
+  const paginatedFormer = filteredFormer.slice(0, entriesToShow);
 
+  /* ===============================
+     LOADING / ERROR
+  =============================== */
   if (loading) {
     return (
       <Container fluid className="my-4">
         <Row>
-          <Col md={3}>
-            <SideNavParish />
-          </Col>
+          <Col md={3}><SideNavParish /></Col>
           <Col md={9} className="text-center">
             <Spinner animation="border" variant="danger" />
-            <p className="mt-2">Loading parish details...</p>
           </Col>
         </Row>
       </Container>
@@ -95,16 +135,12 @@ const ParishDetail = () => {
     return (
       <Container fluid className="my-4">
         <Row>
-          <Col md={3}>
-            <SideNavParish />
-          </Col>
+          <Col md={3}><SideNavParish /></Col>
           <Col md={9}>
             <Alert variant="danger">
-              {error || 'Parish not found'}
+              {error || "Parish not found"}
               <div className="mt-2">
-                <Button variant="outline-danger" onClick={() => navigate('/parishes')}>
-                  Back to Parishes List
-                </Button>
+                <Button onClick={() => navigate("/parishes")}>Back</Button>
               </div>
             </Alert>
           </Col>
@@ -113,164 +149,188 @@ const ParishDetail = () => {
     );
   }
 
+  /* ===============================
+     UI
+  =============================== */
   return (
     <Container fluid className="my-4">
       <Row>
-        <Col md={3}>
-          <SideNavParish />
-        </Col>
+        <Col md={3}><SideNavParish /></Col>
+
         <Col md={9}>
-          {/* Header with Back Button */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h4 className="text-danger fw-bold mb-0">{parish.name}</h4>
-            <Button variant="outline-danger" size="sm" onClick={() => navigate('/parishes')}>
-              Back to List
+          <div className="d-flex justify-content-between mb-3">
+            <h4 className="text-danger fw-bold">{parish.name}</h4>
+            <Button
+              size="sm"
+              variant="outline-danger"
+              onClick={() => navigate("/parishes")}
+            >
+              Back
             </Button>
           </div>
 
-          {/* Main Parish Information Card - Matching your screenshot */}
-          <Card className="mb-4 parish-main-card">
-            <Card.Body className="p-4">
-              <Row>
-                <Col md={8}>
-                  <h5 className="text-danger mb-3">{parish.name}</h5>
-                  <div className="parish-details">
-                    <p className="mb-2">
-                      <strong>Address:</strong> {parish.address || 'N/A'}
-                    </p>
-                    <p className="mb-2">
-                      <strong>Website:</strong> {parish.website || 'N/A'}
-                    </p>
-                    <p className="mb-2">
-                      <strong>E-mail:</strong> {parish.email || 'N/A'}
-                    </p>
-                    <p className="mb-2">
-                      <strong>Phone:</strong> {parish.phone || 'N/A'}
-                    </p>
-                    <p className="mb-2">
-                      <strong>Established Date:</strong> {formatDate(parish.estb_date)}
-                    </p>
-                    <p className="mb-2">
-                      <strong>Former:</strong> {parish.forane_name || 'N/A'}
-                    </p>
-                  </div>
-                </Col>
-                <Col md={4}>
-                  {/* Quick Stats Box */}
-                  <div className="quick-stats-box">
-                    <h6 className="text-danger mb-3">Quick Stats</h6>
-                    <div className="stats-grid">
-                      <div className="stat-item">
-                        <div className="stat-label">Assistant Vicar</div>
-                        <div className="stat-value">-</div>
-                      </div>
-                      <div className="stat-item">
-                        <div className="stat-label">Fax</div>
-                        <div className="stat-value">-</div>
-                      </div>
-                      <div className="stat-item">
-                        <div className="stat-label">Area sq. km</div>
-                        <div className="stat-value">{parish.area || 0}</div>
-                      </div>
-                      <div className="stat-item">
-                        <div className="stat-label">Family Units</div>
-                        <div className="stat-value">{parish.no_family_units || 0}</div>
-                      </div>
-                      <div className="stat-item">
-                        <div className="stat-label">Families</div>
-                        <div className="stat-value">{parish.no_families || 0}</div>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+          {/* ================= CURRENT PRIEST ================= */}
+          {activeTab === "overview" && (
+            <Card className="mb-4">
+              <Card.Body>
+                <h5 className="text-danger mb-3">Current Priest</h5>
 
-          {/* Navigation Tabs */}
-          <div className="parish-nav-tabs mb-4">
-            <button className="nav-tab active">Overview</button>
-            <button className="nav-tab">History</button>
-            <button className="nav-tab">Former Priests</button>
-            <button className="nav-tab">Gallery</button>
-            <button className="nav-tab">Contact</button>
+                {currentPriest ? (
+                  <Row className="align-items-center">
+                    <Col md={3}>
+                      <Image
+                        src="/priest-placeholder.jpg"
+                        fluid
+                        rounded
+                      />
+                    </Col>
+                    <Col md={9}>
+                      <h6 className="mb-1">
+                        Fr.{" "}
+                        {currentPriest.priest_name ||
+                          currentPriest.priest_id}
+                      </h6>
+                      <p className="mb-1">
+                        {currentPriest.designation}
+                      </p>
+                      <p className="mb-0">
+                        From: {formatDate(currentPriest.start_date)}
+                      </p>
+                    </Col>
+                  </Row>
+                ) : (
+                  <p className="text-muted">No current priest</p>
+                )}
+              </Card.Body>
+            </Card>
+          )}
+
+          {/* ================= PARISH DETAILS ================= */}
+          {activeTab === "overview" && (
+            <Card className="mb-4">
+              <Card.Body>
+                <Row>
+                  <Col md={5}>
+                    <Image
+                      src={
+                        parish.image
+                          ? `${API_BASE}/uploads/${parish.image}`
+                          : "/church-placeholder.jpg"
+                      }
+                      fluid
+                      rounded
+                    />
+                  </Col>
+
+                  <Col md={7}>
+                    <p><strong>Address:</strong> {parish.address}</p>
+                    <p><strong>Website:</strong> {parish.website || "—"}</p>
+                    <p><strong>Email:</strong> {parish.email || "—"}</p>
+                    <p><strong>Phone:</strong> {parish.phone || "—"}</p>
+
+                    <p>
+                      <strong>Established:</strong>{" "}
+                      {parish.estb_date
+                        ? new Date(parish.estb_date).getFullYear()
+                        : "N/A"}
+                    </p>
+
+                    <p><strong>Forane:</strong> {parish.forane_name}</p>
+
+                    <hr />
+                    <Row>
+                      <Col>
+                        <strong>Area</strong><br />
+                        {parish.area || 0} sq.km
+                      </Col>
+                      <Col>
+                        <strong>Family Units</strong><br />
+                        {parish.no_family_units || 0}
+                      </Col>
+                      <Col>
+                        <strong>Families</strong><br />
+                        {parish.no_families || 0}
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          )}
+
+          {/* ================= TABS ================= */}
+          <div className="parish-nav-tabs mb-3">
+            <button
+              className={`nav-tab ${activeTab === "overview" ? "active" : ""}`}
+              onClick={() => setActiveTab("overview")}
+            >
+              Overview
+            </button>
+            <button
+              className={`nav-tab ${activeTab === "former" ? "active" : ""}`}
+              onClick={() => setActiveTab("former")}
+            >
+              Former Priests
+            </button>
           </div>
 
-          {/* Former Priests Section - Exact match to your screenshot */}
-          <Card>
-            <Card.Header className="bg-light">
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  <h5 className="mb-0"># Overview History</h5>
-                  <h4 className="text-danger mb-0">## Former Priests</h4>
-                </div>
-                <div className="d-flex align-items-center gap-3">
-                  <span className="text-muted">Show</span>
-                  <Form.Select 
-                    size="sm" 
-                    style={{ width: '80px' }}
-                    value={entriesToShow}
-                    onChange={(e) => setEntriesToShow(Number(e.target.value))}
-                  >
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </Form.Select>
-                  <span className="text-muted">entries</span>
-                  <Form.Control
-                    type="text"
-                    placeholder="Search:"
-                    size="sm"
-                    style={{ width: '150px' }}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-              </div>
-            </Card.Header>
-            <Card.Body className="p-0">
-              <div className="table-responsive">
-                <Table bordered hover className="mb-0">
-                  <thead className="table-danger">
-                    <tr>
-                      <th>From</th>
-                      <th>To</th>
-                      <th>Name</th>
-                      <th>Designation</th>
-                      <th>Home Parish</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentPagePriests.map((priest, index) => (
-                      <tr key={index}>
-                        <td>{priest.from}</td>
-                        <td>{priest.to}</td>
-                        <td>{priest.name}</td>
-                        <td>{priest.designation}</td>
-                        <td>{priest.home_parish}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </div>
-              
-              {/* Table Footer */}
-              <div className="table-footer p-3 bg-light">
-                <div className="d-flex justify-content-between align-items-center">
-                  <span className="text-muted">
-                    Showing 1 to {currentPagePriests.length} of {filteredPriests.length} entries
-                  </span>
-                  <div className="pagination">
-                    <button className="btn btn-sm btn-outline-secondary me-1">Previous</button>
-                    <button className="btn btn-sm btn-danger me-1">1</button>
-                    <button className="btn btn-sm btn-outline-secondary me-1">2</button>
-                    <button className="btn btn-sm btn-outline-secondary">Next</button>
+          {/* ================= FORMER PRIESTS ================= */}
+          {activeTab === "former" && (
+            <Card>
+              <Card.Header className="d-flex justify-content-between">
+                <Form.Select
+                  size="sm"
+                  style={{ width: 90 }}
+                  value={entriesToShow}
+                  onChange={(e) => setEntriesToShow(+e.target.value)}
+                >
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                </Form.Select>
+
+                <Form.Control
+                  size="sm"
+                  placeholder="Search"
+                  style={{ width: 200 }}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </Card.Header>
+
+              <Card.Body className="p-0">
+                {historyLoading ? (
+                  <div className="text-center p-3">
+                    <Spinner />
                   </div>
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
+                ) : (
+                  <Table bordered hover className="mb-0">
+                    <thead className="table-danger">
+                      <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginatedFormer.map((p, i) => (
+                        <tr key={i}>
+                          <td>{formatDate(p.start_date)}</td>
+                          <td>{formatDate(p.end_date)}</td>
+                          <td>
+                            Fr.{" "}
+                            {p.priest_name || p.priest_id}
+                          </td>
+                          <td>{p.designation}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
+              </Card.Body>
+            </Card>
+          )}
         </Col>
       </Row>
     </Container>
