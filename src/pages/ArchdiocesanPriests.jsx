@@ -72,11 +72,16 @@ const ArchdiocesanPriests = () => {
                     priests.map((priest, index) => (
                       <tr key={priest._id}>
                         <td>{index + 1}</td>
-                        <td>
-                          <Link to={`/priests/${priest._id}`} className="text-decoration-none text-danger fw-bold">
-                            {priest.name}
-                          </Link>
-                        </td>
+                   <td>
+  <Link
+    to={`/priests/${priest._id}`}
+    className="text-decoration-none text-danger fw-bold"
+  >
+    Fr. {priest.house_name ? `${priest.house_name} ` : ""}
+    {priest.name}
+  </Link>
+</td>
+
                         <td>{priest.designation}</td>
                         <td>{priest.present_address || priest.current_place}</td>
                         <td>{priest.mobile || priest.phone || priest.whatsapp}</td>
