@@ -1,61 +1,93 @@
 // src/pages/FilialChurches.jsx
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Table, Form, Spinner } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import SideNavParish from '../components/SideNavParish';
-import './Parishes.css';
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Form,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import SideNavParish from "../components/SideNavParish";
+import "./Parishes.css";
+
+const API_BASE = "http://localhost:5000";
 
 const FilialChurches = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [filialChurches, setFilialChurches] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const fetchFilialChurches = async () => {
-    try {
-      setLoading(true);
+  /* ===============================
+     READ FORANE FROM URL
+  =============================== */
+  const queryParams = new URLSearchParams(location.search);
+  const foraneFilter = queryParams.get("forane"); // e.g. ALAKODE
 
-      const response = await fetch(
-        'http://localhost:5000/api/import/parishes'
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch parishes');
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        // ✅ FILTER ONLY FILIAL CHURCHES
-        const filial = result.data.filter(
-          (p) =>
-            p.parish_type &&
-            p.parish_type.toLowerCase().includes('filial')
-        );
-
-        setFilialChurches(filial);
-      }
-    } catch (error) {
-      console.error('Error fetching filial churches:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  /* ===============================
+     FETCH FILIAL CHURCHES
+  =============================== */
   useEffect(() => {
-    fetchFilialChurches();
-  }, []);
+    const fetchFilialChurches = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  // 🔎 Search
-  const filteredChurches = filialChurches.filter((church) =>
-    church.name.toLowerCase().includes(searchTerm.toLowerCase())
+        const res = await fetch(`${API_BASE}/api/import/parishes`);
+        if (!res.ok) throw new Error("Failed to fetch parishes");
+
+        const json = await res.json();
+        if (!json.success) throw new Error("Invalid API response");
+
+        const filtered = json.data.filter((p) => {
+          const isFilial =
+            p.parish_type &&
+            p.parish_type.toLowerCase().includes("filial");
+
+          const matchesForane = foraneFilter
+            ? p.forane_name?.toUpperCase() ===
+              foraneFilter.toUpperCase()
+            : true;
+
+          return isFilial && matchesForane;
+        });
+
+        setFilialChurches(filtered);
+      } catch (err) {
+        console.error(err);
+        setError("Unable to load filial churches");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilialChurches();
+  }, [foraneFilter]);
+
+  /* ===============================
+     SEARCH FILTER
+  =============================== */
+  const filteredData = filialChurches.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 👉 Navigate to Parish Detail page
-  const handleChurchClick = (parishId) => {
-    navigate(`/parish/${parishId}`);
+  /* ===============================
+     NAVIGATION → PARISH DETAIL
+     (IMPORTANT)
+  =============================== */
+  const handleChurchClick = (churchId) => {
+    navigate(`/parish/${churchId}`);
   };
 
+  /* ===============================
+     LOADING
+  =============================== */
   if (loading) {
     return (
       <Container fluid className="my-4">
@@ -65,13 +97,33 @@ const FilialChurches = () => {
           </Col>
           <Col md={9} className="text-center">
             <Spinner animation="border" variant="danger" />
-            <p className="mt-2">Loading filial churches...</p>
           </Col>
         </Row>
       </Container>
     );
   }
 
+  /* ===============================
+     ERROR
+  =============================== */
+  if (error) {
+    return (
+      <Container fluid className="my-4">
+        <Row>
+          <Col md={3}>
+            <SideNavParish />
+          </Col>
+          <Col md={9}>
+            <Alert variant="danger">{error}</Alert>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+
+  /* ===============================
+     UI
+  =============================== */
   return (
     <Container fluid className="my-4">
       <Row>
@@ -80,18 +132,24 @@ const FilialChurches = () => {
         </Col>
 
         <Col md={9}>
-          <h4 className="text-danger fw-bold mb-3">
+          <h4 className="text-danger fw-bold mb-2">
             FILIAL CHURCHES
           </h4>
+
+          {foraneFilter && (
+            <p className="text-muted mb-3">
+              Showing Filial Churches under{" "}
+              <strong>{foraneFilter} Forane</strong>
+            </p>
+          )}
 
           {/* SEARCH */}
           <div className="d-flex justify-content-end mb-2">
             <Form.Control
-              type="text"
-              placeholder="Search:"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="table-search"
+              placeholder="Search church..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ width: "220px" }}
             />
           </div>
 
@@ -99,55 +157,63 @@ const FilialChurches = () => {
           <div className="table-responsive">
             <Table
               bordered
-              className="custom-parish-table text-nowrap align-middle"
+              hover
+              className="parish-table text-nowrap align-middle"
             >
-              <thead>
+              <thead className="table-danger">
                 <tr>
                   <th>Sl No</th>
                   <th>Church Name</th>
                   <th>Vicar</th>
                   <th>Address</th>
-                  <th>Phone Number</th>
+                  <th>Phone</th>
                 </tr>
               </thead>
+
               <tbody>
-                {filteredChurches.length === 0 ? (
-                  <tr>
-                    <td colSpan="5" className="text-center text-muted">
-                      No filial churches found
-                    </td>
-                  </tr>
-                ) : (
-                  filteredChurches.map((church, index) => (
-                    <tr key={church._id}>
+                {filteredData.length > 0 ? (
+                  filteredData.map((item, index) => (
+                    <tr key={item._id}>
                       <td>{index + 1}</td>
 
-                      {/* ✅ CLICKABLE LIKE PARISH TABLE */}
+                      {/* CLICK → PARISH DETAIL */}
                       <td>
                         <button
-                          className="btn btn-link text-primary p-0 text-decoration-none"
-                          style={{ border: 'none', background: 'none' }}
+                          className="btn btn-link p-0 text-decoration-none"
+                          style={{ border: "none" }}
                           onClick={() =>
-                            handleChurchClick(church._id)
+                            handleChurchClick(item._id)
                           }
                         >
-                          {church.name}
+                          {item.name}
                         </button>
                       </td>
 
                       <td>
-                        {church.vicar_name
-                          ? `Fr. ${church.vicar_name}`
-                          : 'N/A'}
+                        {item.vicar_name
+                          ? `Fr. ${item.vicar_name}`
+                          : "N/A"}
                       </td>
-                      <td>{church.address || 'N/A'}</td>
+
+                      <td>{item.address || "N/A"}</td>
+
                       <td>
-                        {church.phone ||
-                          church.mobile ||
-                          'N/A'}
+                        {item.phone ||
+                          item.mobile ||
+                          item.whatsapp_number ||
+                          "N/A"}
                       </td>
                     </tr>
                   ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="5"
+                      className="text-center text-muted"
+                    >
+                      No Filial Churches found
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </Table>

@@ -135,10 +135,16 @@ const navigate = useNavigate();
   Parishes: {parishCount}
 </Button>
 
+<Button
+  variant="danger"
+  size="sm"
+  onClick={() =>
+    navigate(`/filial-churches?forane=${item.place}`)
+  }
+>
+  Filial Churches: {filialCount}
+</Button>
 
-                        <Button variant="danger" size="sm">
-                          Filial Churches: {filialCount}
-                        </Button>
                       </div>
                     </div>
                   </div>
