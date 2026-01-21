@@ -58,7 +58,7 @@ const AdminReport = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('https://tellicheri.onrender.com/api/administration');
+                const res = await axios.get('http://localhost:5000/api/administration');
                 setAdminData(res.data || []);
             } catch (error) {
                 console.error('Failed to fetch admin data:', error);

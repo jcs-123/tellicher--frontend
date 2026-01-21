@@ -39,7 +39,7 @@ const AddBulletin = () => {
   form.append('status', formData.status);
 
   try {
-    const res = await fetch('https://tellicheri.onrender.com/api/bulletins/add', {
+    const res = await fetch('http://localhost:5000/api/bulletins/add', {
       method: 'POST',
       body: form
     });

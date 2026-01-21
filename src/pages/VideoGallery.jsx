@@ -8,7 +8,7 @@ const VideoGallery = () => {
   const [videoItems, setVideoItems] = useState([]);
 
   useEffect(() => {
-    axios.get('https://tellicheri.onrender.com/api/gallery?type=Video&status=Published')
+    axios.get('http://localhost:5000/api/gallery?type=Video&status=Published')
       .then(res => setVideoItems(res.data))
       .catch(() => setVideoItems([]));
   }, []);

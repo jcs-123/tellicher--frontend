@@ -79,7 +79,7 @@ const ParishDetail = () => {
           (p) =>
             p.category_id &&
             p.category_id.trim().toLowerCase() ===
-              parish.name.trim().toLowerCase()
+            parish.name.trim().toLowerCase()
         );
 
         const current =
@@ -213,13 +213,20 @@ const ParishDetail = () => {
                   <Col md={5}>
                     <Image
                       src={
-                        parish.image
-                          ? `${API_BASE}/uploads/${parish.image}`
+                        parish.photo
+                          ? `${API_BASE}/uploads/parish/${parish.photo}`
                           : "/church-placeholder.jpg"
                       }
-                      fluid
+                      alt={parish.name}
                       rounded
+                      style={{
+                        width: "300px",
+                        height: "200px",
+                        objectFit: "cover"
+                      }}
                     />
+
+
                   </Col>
 
                   <Col md={7}>

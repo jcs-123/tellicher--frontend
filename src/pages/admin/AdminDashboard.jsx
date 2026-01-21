@@ -31,7 +31,7 @@ function AdminDashboard() {
         try {
             const username = localStorage.getItem('username');
             if (username) {
-                await axios.post('https://tellicheri.onrender.com/api/auth/logout', { username });
+                await axios.post('http://localhost:5000/api/auth/logout', { username });
             }
         } catch (err) {
             console.error('Logout log failed:', err);
@@ -52,7 +52,7 @@ function AdminDashboard() {
     useEffect(() => {
         const fetchLogs = async () => {
             try {
-                const res = await axios.get('https://tellicheri.onrender.com/api/logs', {
+                const res = await axios.get('http://localhost:5000/api/logs', {
                     params: { limit: 4 }
                 });
                 setActivities(res.data);

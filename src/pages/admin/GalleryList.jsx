@@ -43,7 +43,7 @@ const GalleryList = () => {
   const fetchGallery = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('https://tellicheri.onrender.com/api/gallery');
+      const res = await axios.get('http://localhost:5000/api/gallery');
       // Sort galleries by creation date in ascending order (oldest first)
       const sortedGalleries = res.data.sort((a, b) => 
         new Date(a.createdAt) - new Date(b.createdAt)
@@ -77,7 +77,7 @@ const GalleryList = () => {
 
   const handleStatusChange = async (galleryId, newStatus) => {
     try {
-      await axios.patch(`https://tellicheri.onrender.com/api/gallery/${galleryId}`, { status: newStatus });
+      await axios.patch(`http://localhost:5000/api/gallery/${galleryId}`, { status: newStatus });
       fetchGallery();
       setShowStatusModal(false);
     } catch (error) {
@@ -111,7 +111,7 @@ const GalleryList = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://tellicheri.onrender.com/api/gallery/${selectedGallery._id}`, {
+      await axios.put(`http://localhost:5000/api/gallery/${selectedGallery._id}`, {
         ...editFormData,
         eventDate: editFormData.eventDate.toISOString()
       });
@@ -134,7 +134,7 @@ const GalleryList = () => {
         });
 
         await axios.post(
-          `https://tellicheri.onrender.com/api/gallery/${selectedGallery._id}/images`,
+          `http://localhost:5000/api/gallery/${selectedGallery._id}/images`,
           formData,
           {
             headers: {
@@ -143,7 +143,7 @@ const GalleryList = () => {
           }
         );
       } else if (selectedGallery.type === 'Video') {
-        await axios.put(`https://tellicheri.onrender.com/api/gallery/${selectedGallery._id}`, {
+        await axios.put(`http://localhost:5000/api/gallery/${selectedGallery._id}`, {
           videoUrl: editFormData.videoUrl
         });
       }
@@ -161,12 +161,12 @@ const GalleryList = () => {
   const removeMedia = async (mediaUrl) => {
     try {
       if (selectedGallery.type === 'Image') {
-        await axios.delete(`https://tellicheri.onrender.com/api/gallery/${selectedGallery._id}/images`, {
+        await axios.delete(`http://localhost:5000/api/gallery/${selectedGallery._id}/images`, {
           data: { imageUrl: mediaUrl }
         });
         setSelectedImages(selectedImages.filter(img => img !== mediaUrl));
       } else if (selectedGallery.type === 'Video') {
-        await axios.put(`https://tellicheri.onrender.com/api/gallery/${selectedGallery._id}`, {
+        await axios.put(`http://localhost:5000/api/gallery/${selectedGallery._id}`, {
           videoUrl: ''
         });
         setSelectedGallery({...selectedGallery, videoUrl: ''});
@@ -447,7 +447,7 @@ const GalleryList = () => {
                   <Col md={4} key={index} className="mb-3">
                     <div className="position-relative">
                       <img 
-                        src={`https://tellicheri.onrender.com${image}`} 
+                        src={`http://localhost:5000${image}`} 
                         alt={`Gallery ${index + 1}`} 
                         className="img-fluid rounded"
                         style={{ height: '150px', width: '100%', objectFit: 'cover' }}

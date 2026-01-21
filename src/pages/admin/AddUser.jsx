@@ -23,7 +23,7 @@ const AddUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('https://tellicheri.onrender.com/api/users', formData);
+            await axios.post('http://localhost:5000/api/users', formData);
             setStatus({ type: 'success', message: 'User added successfully' });
             setFormData({
                 userGroup: '',

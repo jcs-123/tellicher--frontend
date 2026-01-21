@@ -13,7 +13,7 @@ const News = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get('https://tellicheri.onrender.com/api/news');
+        const res = await axios.get('http://localhost:5000/api/news');
         setNewsItems(res.data);
       } catch (err) {
         console.error('Error fetching news:', err);
@@ -190,7 +190,7 @@ const News = () => {
                         {/* PDF */}
                         {type === 'pdf' && item.file && (
                           <a
-                            href={`https://tellicheri.onrender.com/uploads/${item.file}`}
+                            href={`http://localhost:5000/uploads/${item.file}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ 
@@ -216,7 +216,7 @@ const News = () => {
                         {type === 'image' && item.image && (
                           <div style={{ display: 'flex', gap: '1.2rem', marginTop: '0.5rem' }}>
                             <img
-                              src={`https://tellicheri.onrender.com/uploads/${item.image}`}
+                              src={`http://localhost:5000/uploads/${item.image}`}
                               alt="news"
                               style={{
                                 width: '180px',
@@ -290,7 +290,7 @@ const News = () => {
 
                             {item.file && (
                               <a
-                                href={`https://tellicheri.onrender.com/uploads/${item.file}`}
+                                href={`http://localhost:5000/uploads/${item.file}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{

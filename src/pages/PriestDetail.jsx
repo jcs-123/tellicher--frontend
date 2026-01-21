@@ -21,6 +21,9 @@ import {
 import SideNavPriests from "../components/SideNavPriests";
 import "./Priests.css";
 
+const API_BASE =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const API_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
 
@@ -121,11 +124,11 @@ const PriestDetail = () => {
         </Col>
 
         <Col md={9}>
-         
-<h4 className="text-danger fw-bold text-uppercase mb-3">
-  Fr. {priest.house_name ? `${priest.house_name} ` : ""}
-  {priest.name}
-</h4>
+
+          <h4 className="text-danger fw-bold text-uppercase mb-3">
+            Fr. {priest.house_name ? `${priest.house_name} ` : ""}
+            {priest.name}
+          </h4>
 
           <Row>
             {/* IMAGE */}
@@ -133,13 +136,19 @@ const PriestDetail = () => {
               <img
                 src={
                   priest.photo
-                    ? `${UPLOAD_BASE}/uploads/${priest.photo}`
+                    ? `${API_BASE}/uploads/preist/${priest.photo}`
                     : "/default-priest.png"
                 }
                 alt={priest.name}
                 className="img-fluid shadow"
-                style={{ maxHeight: 320 }}
+                style={{
+                  width: "220px",
+                  height: "280px",
+                  objectFit: "cover",
+                  borderRadius: "8px"
+                }}
               />
+
             </Col>
 
             {/* DETAILS */}

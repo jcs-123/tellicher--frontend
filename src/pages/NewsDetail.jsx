@@ -12,7 +12,7 @@ const NewsDetail = () => {
     // Fetch current news item
     const fetchNewsItem = async () => {
       try {
-        const res = await axios.get(`https://tellicheri.onrender.com/api/news/${id}`);
+        const res = await axios.get(`http://localhost:5000/api/news/${id}`);
         setNews(res.data);
       } catch (err) {
         console.error('Failed to fetch news:', err);
@@ -22,7 +22,7 @@ const NewsDetail = () => {
     // Fetch archive list
     const fetchArchive = async () => {
       try {
-        const res = await axios.get(`https://tellicheri.onrender.com/api/news`);
+        const res = await axios.get(`http://localhost:5000/api/news`);
         const sortedNews = res.data.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
         setNewsArchive(sortedNews.slice(0, 10)); // Limit to 10 recent
       } catch (err) {
@@ -96,7 +96,7 @@ const NewsDetail = () => {
             <div className="news-image-container">
               {news.image && (
                 <img
-                  src={`https://tellicheri.onrender.com/uploads/${news.image}`}
+                  src={`http://localhost:5000/uploads/${news.image}`}
                   alt="news"
                   className="news-image"
                 />
@@ -110,7 +110,7 @@ const NewsDetail = () => {
           {news.type === 'PDF' && news.file && (
             <div className="pdf-container">
               <a
-                href={`https://tellicheri.onrender.com/uploads/${news.file}`}
+                href={`http://localhost:5000/uploads/${news.file}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pdf-link"

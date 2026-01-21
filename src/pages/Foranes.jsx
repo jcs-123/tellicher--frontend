@@ -1,83 +1,133 @@
 // src/pages/Foranes.jsx
 import React, { useEffect, useState } from "react";
-import { Row, Col, Container, Button, Spinner, Alert } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Button,
+  Spinner,
+  Alert
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import SideNavParish from "../components/SideNavParish";
 import "./Foranes.css";
-import { useNavigate } from "react-router-dom";
-
-// Images
-import alakodeImg from "../assets/i1.jpg";
-import chempanthottyImg from "../assets/i2.jpg";
-import chemperyImg from "../assets/i3.jpg";
-import cherupuzhaImg from "../assets/i4.jpg";
-
-const imageMap = {
-  ALAKODE: alakodeImg,
-  CHEMPANTHOTTY: chempanthottyImg,
-  CHEMPERY: chemperyImg,
-  CHERUPUZHA: cherupuzhaImg,
-};
 
 const API_BASE = "http://localhost:5000";
+
+/* ===============================
+   STRONG NORMALIZE (SAFE MATCH)
+   =============================== */
+const normalize = (value = "") =>
+  value
+    .toUpperCase()
+    .replace(/\s+/g, "")
+    .replace(/[^A-Z]/g, "")
+    .trim();
 
 const Foranes = () => {
   const [foranes, setForanes] = useState([]);
   const [parishes, setParishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
 
   /* ===============================
-     FETCH ALL PARISH DATA
-     (Forane + Parish + Filial)
-  =============================== */
+     FETCH FORANES + PARISHES
+     =============================== */
   useEffect(() => {
-    const fetchParishes = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/import/parishes`);
-        const json = await res.json();
+        const [foraneRes, parishRes] = await Promise.all([
+          fetch(`${API_BASE}/api/import/foranes`),
+          fetch(`${API_BASE}/api/import/parishes`)
+        ]);
 
-        if (!json.success) throw new Error("Failed to load parishes");
+        const foraneJson = await foraneRes.json();
+        const parishJson = await parishRes.json();
 
-        // 🔹 Split data
-        setForanes(json.data.filter(p => p.parish_type === "Forane"));
-        setParishes(json.data);
+        if (!foraneJson.success) throw new Error("Foranes fetch failed");
+        if (!parishJson.success) throw new Error("Parishes fetch failed");
+
+        console.log("✅ FORANES:", foraneJson.data);
+        console.log("✅ PARISHES:", parishJson.data);
+
+        setForanes(foraneJson.data);
+        setParishes(parishJson.data);
       } catch (err) {
+        console.error("❌ FETCH ERROR:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchParishes();
+    fetchData();
   }, []);
 
   /* ===============================
-     COUNT PARISHES BY FORANE
-  =============================== */
-  const getCounts = (forane) => {
-    const parishCount = parishes.filter(
-      p =>
-        p.parish_type === "Parish" &&
-        p.forane_name?.toUpperCase() === forane.place.toUpperCase()
+     DERIVE DATA PER FORANE
+     =============================== */
+  const getForaneDetails = (forane) => {
+    const key = normalize(forane.place);
+
+    // ✅ MAIN PARISH = PLACE MATCH
+    const mainParish = parishes.find(
+      p => normalize(p.place) === key
+    );
+
+    // ✅ COUNTS = FORANE NAME MATCH
+    const relatedParishes = parishes.filter(
+      p => normalize(p.forane_name) === key
+    );
+
+    const parishCount = relatedParishes.filter(
+      p => p.parish_type === "Parish"
     ).length;
 
-    const filialCount = parishes.filter(
-      p =>
-        p.parish_type === "Filial Church A" &&
-        p.forane_name?.toUpperCase() === forane.place.toUpperCase()
+    const filialCount = relatedParishes.filter(
+      p => p.parish_type === "Filial Church A"
     ).length;
 
-    return { parishCount, filialCount };
+    console.log(`🔍 ${forane.place}`, {
+      mainParish,
+      parishCount,
+      filialCount
+    });
+
+    return {
+      parishCount,
+      filialCount,
+      vicar_name: mainParish?.vicar_name,
+      estb_date: mainParish?.estb_date,
+      address: mainParish?.address,
+      photo: mainParish?.photo
+    };
+  };
+
+  /* ===============================
+     IMAGE FROM PARISH ONLY
+     =============================== */
+  const getForaneImage = (photo) => {
+    if (!photo) {
+      console.warn("⚠️ No image found → default");
+      return "/default-forane.jpg"; // must exist in public/
+    }
+
+    const url = `${API_BASE}/uploads/parish/${photo}`;
+    console.log("🖼️ IMAGE URL:", url);
+    return url;
   };
 
   /* ===============================
      UI
-  =============================== */
+     =============================== */
   return (
     <Container fluid className="my-4">
       <Row>
-        <Col md={3}><SideNavParish /></Col>
+        <Col md={3}>
+          <SideNavParish />
+        </Col>
 
         <Col md={9}>
           <h4 className="text-danger mb-4 fw-bold">FORANES</h4>
@@ -86,67 +136,74 @@ const navigate = useNavigate();
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Row xs={1} md={2} className="g-4">
-            {foranes.map((item) => {
-              const { parishCount, filialCount } = getCounts(item);
+            {foranes.map((forane) => {
+              const {
+                parishCount,
+                filialCount,
+                vicar_name,
+                estb_date,
+                address,
+                photo
+              } = getForaneDetails(forane);
 
               return (
-                <Col key={item._id}>
+                <Col key={forane._id || forane.id}>
                   <div className="forane-box shadow-sm">
+
                     <div className="forane-image-wrapper">
                       <img
-                        src={
-                          imageMap[item.place?.toUpperCase()] ||
-                          "/default-forane.jpg"
-                        }
-                        alt={item.place}
+                        src={getForaneImage(photo)}
+                        alt={forane.place}
+                        className="forane-image"
+                        onError={(e) => {
+                          console.error("❌ IMAGE LOAD FAILED:", e.target.src);
+                          e.target.src = "/default-forane.jpg";
+                        }}
                       />
                     </div>
 
                     <div className="forane-content">
                       <h6 className="text-uppercase fw-bold text-danger mb-2">
-                        {item.place} FORANE
+                        {forane.place} FORANE
                       </h6>
 
                       <p>
                         <strong>Vicar:</strong>{" "}
-                        {item.vicar_name ? `Fr. ${item.vicar_name}` : "N/A"}
+                        {vicar_name ? `Fr. ${vicar_name}` : "N/A"}
                       </p>
 
-                     <p>
-  <strong>Established:</strong>{" "}
-  {item.estb_date
-    ? new Date(item.estb_date).getFullYear()
-    : "N/A"}
-</p>
-
+                      <p>
+                        <strong>Established:</strong>{" "}
+                        {estb_date || "N/A"}
+                      </p>
 
                       <p className="fst-italic">
-                        {item.address}
+                        {address || "—"}
                       </p>
 
                       <div className="d-flex gap-2 mt-2">
-                       <Button
-  variant="danger"
-  size="sm"
-  onClick={() =>
-    navigate(`/parishes?forane=${item.place}`)
-  }
->
-  Parishes: {parishCount}
-</Button>
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() =>
+                            navigate(`/parishes?forane=${forane.place}`)
+                          }
+                        >
+                          Parishes: {parishCount}
+                        </Button>
 
-<Button
-  variant="danger"
-  size="sm"
-  onClick={() =>
-    navigate(`/filial-churches?forane=${item.place}`)
-  }
->
-  Filial Churches: {filialCount}
-</Button>
-
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() =>
+                            navigate(`/filial-churches?forane=${forane.place}`)
+                          }
+                        >
+                          Filial Churches: {filialCount}
+                        </Button>
                       </div>
                     </div>
+
                   </div>
                 </Col>
               );

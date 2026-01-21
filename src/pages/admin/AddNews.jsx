@@ -45,7 +45,7 @@ const AddNews = () => {
       if (newsData.image) formData.append('image', newsData.image);
       if (newsData.file) formData.append('file', newsData.file);
 
-      await axios.post('https://tellicheri.onrender.com/api/news', formData, {
+      await axios.post('http://localhost:5000/api/news', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
