@@ -74,7 +74,7 @@ const ArchdiocesanPriests = () => {
                         <td>{index + 1}</td>
                    <td>
   <Link
-    to={`/priests/${priest._id}`}
+    to={`/priests/${priest.id}`}
     className="text-decoration-none text-danger fw-bold"
   >
     Fr. {priest.house_name ? `${priest.house_name} ` : ""}

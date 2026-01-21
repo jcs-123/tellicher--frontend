@@ -36,22 +36,27 @@ const PriestDetail = () => {
   /* ===============================
      FETCH PRIEST (BY MONGO _id)
   =============================== */
-  useEffect(() => {
-    const fetchPriest = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/priests/${id}`);
-        if (res.data.success) {
-          setPriest(res.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching priest:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchPriest = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/priests`);
+      if (res.data.success) {
+        const matchedPriest = res.data.data.find(
+          (p) => String(p.id) === String(id) // ✅ MATCH HERE
+        );
 
-    fetchPriest();
-  }, [id]);
+        setPriest(matchedPriest || null);
+      }
+    } catch (error) {
+      console.error("Error fetching priest:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPriest();
+}, [id]);
+
 
   /* ===============================
      FETCH SERVICE HISTORY
