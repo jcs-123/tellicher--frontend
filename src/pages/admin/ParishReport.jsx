@@ -80,7 +80,7 @@ const ParishReport = () => {
     const fetchParishData = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/api/parishes');
+            const response = await fetch('https://tellicheri.onrender.com/api/parishes');
             const data = await response.json();
             setParishData(data);
             setLoading(false);

@@ -22,10 +22,10 @@ import SideNavPriests from "../components/SideNavPriests";
 import "./Priests.css";
 
 const API_BASE =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com/api/import";
 
 const UPLOAD_BASE = API_URL.replace("/api/import", "");
 
@@ -39,22 +39,27 @@ const PriestDetail = () => {
   /* ===============================
      FETCH PRIEST (BY MONGO _id)
   =============================== */
-  useEffect(() => {
-    const fetchPriest = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/priests/${id}`);
-        if (res.data.success) {
-          setPriest(res.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching priest:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchPriest = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/priests`);
+      if (res.data.success) {
+        const matchedPriest = res.data.data.find(
+          (p) => String(p.id) === String(id) // ✅ MATCH HERE
+        );
 
-    fetchPriest();
-  }, [id]);
+        setPriest(matchedPriest || null);
+      }
+    } catch (error) {
+      console.error("Error fetching priest:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPriest();
+}, [id]);
+
 
   /* ===============================
      FETCH SERVICE HISTORY

@@ -27,7 +27,7 @@ const UserList = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await axios.get("http://localhost:5000/api/users");
+      const res = await axios.get("https://tellicheri.onrender.com/api/users");
       setUsers(res.data);
     } catch (err) {
       console.error('Error fetching users:', err);
@@ -39,7 +39,7 @@ const UserList = () => {
 
   const toggleStatus = async (userId, currentStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/users/${userId}/status`, {
+      await axios.patch(`https://tellicheri.onrender.com/api/users/${userId}/status`, {
         status: !currentStatus
       });
       fetchUsers();
@@ -56,7 +56,7 @@ const UserList = () => {
 
   const handleEditSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/users/${editUser._id}`, editUser);
+      await axios.put(`https://tellicheri.onrender.com/api/users/${editUser._id}`, editUser);
       setShowEditModal(false);
       fetchUsers();
     } catch (err) {
@@ -67,7 +67,7 @@ const UserList = () => {
 
   const handlePasswordSave = async () => {
     try {
-      await axios.patch(`http://localhost:5000/api/users/${selectedUserId}/password`, { password: newPassword });
+      await axios.patch(`https://tellicheri.onrender.com/api/users/${selectedUserId}/password`, { password: newPassword });
       setShowPasswordModal(false);
       setNewPassword('');
     } catch (err) {

@@ -15,7 +15,7 @@ const Circulars = () => {
 
   const fetchCirculars = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/circulars');
+      const res = await axios.get('https://tellicheri.onrender.com/api/circulars');
       const activeCirculars = res.data?.filter(item => item.isActive) || [];
       setCirculars(activeCirculars);
     } catch (err) {
@@ -97,7 +97,7 @@ const Circulars = () => {
                         <OverlayTrigger placement="top" overlay={renderTooltip}>
                           <Button
                             variant="outline-danger"
-                            href={`http://localhost:5000${item.fileUrl}`}
+                            href={`https://tellicheri.onrender.com${item.fileUrl}`}
                             download
                             target="_blank"
                             rel="noopener noreferrer"

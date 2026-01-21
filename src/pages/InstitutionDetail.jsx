@@ -6,7 +6,7 @@ import buildingImage from "../assets/building.jpg";
 import "./InstitutionDetail.css";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com/api/import";
 
 const InstitutionDetail = () => {
   const { id } = useParams();

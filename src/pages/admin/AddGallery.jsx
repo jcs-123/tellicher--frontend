@@ -52,7 +52,7 @@ const AddGallery = () => {
     });
 
     try {
-      await axios.post('http://localhost:5000/api/gallery', submitData);
+      await axios.post('https://tellicheri.onrender.com/api/gallery', submitData);
       setSubmitStatus({ type: 'success', message: 'Gallery added successfully!' });
 
       setFormData({

@@ -15,7 +15,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import SideNavParish from "../components/SideNavParish";
 import "./ParishDetail.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 /* ===============================
    CURRENT PRIEST LOGIC

@@ -20,7 +20,7 @@ const Obituary = () => {
     try {
       setLoading(true);
       console.log("🔍 Fetching obituary with filter:", activeTab);
-      const res = await axios.get('http://localhost:5000/api/import/priests/obituary', {
+      const res = await axios.get('https://tellicheri.onrender.com/api/import/priests/obituary', {
         params: { filter: activeTab }
       });
       console.log("✅ API response:", res.data);

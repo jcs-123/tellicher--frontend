@@ -40,7 +40,7 @@ const DownloadList = () => {
   const fetchDownloads = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/downloads/all');
+      const res = await axios.get('https://tellicheri.onrender.com/api/downloads/all');
       setDownloads(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error('Error fetching downloads:', err);
@@ -101,7 +101,7 @@ const DownloadList = () => {
       }
       formData.append('oldFileUrl', currentDownload.fileUrl);
 
-      await axios.put(`http://localhost:5000/api/downloads/${currentDownload._id}`, formData, {
+      await axios.put(`https://tellicheri.onrender.com/api/downloads/${currentDownload._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -134,7 +134,7 @@ const DownloadList = () => {
 
   const handleDownload = async (id) => {
     try {
-      window.open(`http://localhost:5000/api/downloads/file/${id}`, '_blank');
+      window.open(`https://tellicheri.onrender.com/api/downloads/file/${id}`, '_blank');
     } catch (err) {
       console.error('Error downloading file:', err);
       toast.error('Failed to download file', {
@@ -151,7 +151,7 @@ const DownloadList = () => {
 
   const toggleStatus = async (id, currentStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/downloads/${id}`, {
+      await axios.put(`https://tellicheri.onrender.com/api/downloads/${id}`, {
         isActive: !currentStatus
       });
       toast.success(`Download ${currentStatus ? 'deactivated' : 'activated'} successfully`, {

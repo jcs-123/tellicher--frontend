@@ -10,7 +10,7 @@ const MarJosephPamplany = () => {
 
   useEffect(() => {
     // Directly set the expected file path (e.g., 'latest.pdf')
-    setDiaryUrl('http://localhost:5000/uploads/programme-diary/latest.pdf');
+    setDiaryUrl('https://tellicheri.onrender.com/uploads/programme-diary/latest.pdf');
   }, []);
 
   return (

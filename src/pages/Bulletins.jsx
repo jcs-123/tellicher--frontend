@@ -16,7 +16,7 @@ const Bulletins = () => {
   useEffect(() => {
     const fetchBulletins = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/bulletins/public');
+        const res = await fetch('https://tellicheri.onrender.com/api/bulletins/public');
         const data = await res.json();
         setBulletins(data);
         setLoading(false);
@@ -114,7 +114,7 @@ const Bulletins = () => {
                           }}>
                             <Card.Img
                               variant="top"
-                              src={`http://localhost:5000${item.coverImageUrl}`}
+                              src={`https://tellicheri.onrender.com${item.coverImageUrl}`}
                               alt={item.title}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               onError={(e) => (e.target.src = '/placeholder.png')}
@@ -139,7 +139,7 @@ const Bulletins = () => {
                                 }}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  window.open(`http://localhost:5000${item.fileUrl}`, '_blank');
+                                  window.open(`https://tellicheri.onrender.com${item.fileUrl}`, '_blank');
                                 }}
                               >
                                 Read Now
@@ -155,7 +155,7 @@ const Bulletins = () => {
                                 }}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  window.location.href = `http://localhost:5000${item.fileUrl}`;
+                                  window.location.href = `https://tellicheri.onrender.com${item.fileUrl}`;
                                 }}
                               >
                                 Download
@@ -213,7 +213,7 @@ const Bulletins = () => {
           <Modal.Body style={{ height: '70vh' }}>
             {selectedBulletin && (
               <iframe
-                src={`http://localhost:5000${selectedBulletin.fileUrl}`}
+                src={`https://tellicheri.onrender.com${selectedBulletin.fileUrl}`}
                 title={selectedBulletin.title}
                 width="100%"
                 height="100%"
@@ -224,7 +224,7 @@ const Bulletins = () => {
           <Modal.Footer style={{ borderTop: '2px solid #dc3545' }}>
             <button
               className="btn btn-danger d-flex align-items-center"
-              onClick={() => window.location.href = `http://localhost:5000${selectedBulletin?.fileUrl}`}
+              onClick={() => window.location.href = `https://tellicheri.onrender.com${selectedBulletin?.fileUrl}`}
             >
               <FiDownload className="me-1" /> Download
             </button>

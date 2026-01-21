@@ -48,7 +48,7 @@ const LiturgicalCalendar = () => {
   const fetchCalendars = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get('http://localhost:5000/api/website-links?pageType=Liturgical Calendar');
+      const res = await axios.get('https://tellicheri.onrender.com/api/website-links?pageType=Liturgical Calendar');
       setCalendars(res.data);
       setFilteredCalendars(res.data);
       setError(null);

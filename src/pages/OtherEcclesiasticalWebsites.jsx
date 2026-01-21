@@ -9,7 +9,7 @@ const OtherEcclesiasticalWebsites = () => {
 
   const fetchWebsites = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/website-links');
+      const res = await axios.get('https://tellicheri.onrender.com/api/website-links');
       const filtered = res.data.filter(link => link.pageType === 'Other Ecclesiastical Websites');
       setWebsites(filtered);
     } catch (err) {

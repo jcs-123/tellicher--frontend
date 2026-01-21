@@ -71,7 +71,7 @@ const ImportData = () => {
 
       setLoading(prev => ({ ...prev, [tableId]: true }));
 
-      const endpoint = `http://localhost:5000/api/import/${tableEndpoints[tableId]}`;
+      const endpoint = `https://tellicheri.onrender.com/api/import/${tableEndpoints[tableId]}`;
 
       // Send data to backend API
       const response = await fetch(endpoint, {

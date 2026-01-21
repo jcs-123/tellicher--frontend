@@ -45,7 +45,7 @@ const AddCircular = () => {
       data.append('displayOrder', form.displayOrder);
       data.append('isActive', form.status === 'Active');
 
-      await axios.post('http://localhost:5000/api/circulars', data, {
+      await axios.post('https://tellicheri.onrender.com/api/circulars', data, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 

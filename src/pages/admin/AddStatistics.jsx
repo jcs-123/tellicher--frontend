@@ -14,7 +14,7 @@ const AddStatistics = () => {
       const parsed = JSON.parse(jsonInput);
       console.log("✅ Parsed JSON object:", parsed);
 
-      const response = await axios.post("http://localhost:5000/api/statistics/bulk", { data: parsed });
+      const response = await axios.post("https://tellicheri.onrender.com/api/statistics/bulk", { data: parsed });
       console.log("✅ Server response:", response.data);
 
       toast.success("Statistics uploaded successfully");
