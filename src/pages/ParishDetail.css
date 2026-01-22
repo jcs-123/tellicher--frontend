@@ -104,3 +104,45 @@
 .table-hover tbody tr:hover {
   background-color: rgba(220, 53, 69, 0.05);
 }
+.parish-info-card {
+  border-radius: 10px;
+}
+
+.parish-image {
+  width: 100%;
+  max-width: 320px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.parish-details p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.parish-details strong {
+  color: #000;
+}
+
+.parish-stats h6 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.parish-stats p {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .parish-image {
+    height: 200px;
+    margin-bottom: 15px;
+  }
+
+  .parish-stats {
+    margin-top: 15px;
+  }
+}

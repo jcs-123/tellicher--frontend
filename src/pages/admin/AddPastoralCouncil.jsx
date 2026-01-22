@@ -10,7 +10,7 @@ const AddPastoralCouncil = () => {
     e.preventDefault();
     try {
       const parsed = JSON.parse(jsonInput);
-      await axios.post("https://tellicheri.onrender.com/api/pastoralCouncil/bulk", { data: parsed });
+      await axios.post("http://localhost:5000/api/pastoralCouncil/bulk", { data: parsed });
       toast.success("Pastoral council uploaded successfully");
     } catch (err) {
       console.error(err);

@@ -16,7 +16,7 @@ const PastoralCouncilDetail = () => {
     const fetchMemberDetails = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`https://tellicheri.onrender.com/api/pastoralCouncil/${id}`);
+        const { data } = await axios.get(`http://localhost:5000/api/pastoralCouncil/${id}`);
         setMember(data);
       } catch (err) {
         console.error('Error fetching member details:', err);

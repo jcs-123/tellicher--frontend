@@ -12,7 +12,7 @@ import {
 import "./EducationalInstitutions.css";
 
 const API_URL =
-    import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com/api/import";
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
 
 const EducationalInstitutions = () => {
     const [institutions, setInstitutions] = useState([]);

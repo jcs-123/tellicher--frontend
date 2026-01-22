@@ -110,7 +110,7 @@ const DataViewer = () => {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const response = await axios.get('https://tellicheri.onrender.com/api/import/summary');
+        const response = await axios.get('http://localhost:5000/api/import/summary');
         if (response.data.success) {
           setDatabaseSummary(response.data);
         }
@@ -129,7 +129,7 @@ const DataViewer = () => {
       
       setLoading(prev => ({ ...prev, [activeTab]: true }));
       try {
-        const response = await axios.get(`https://tellicheri.onrender.com/api/import/${activeTab}`, {
+        const response = await axios.get(`http://localhost:5000/api/import/${activeTab}`, {
           params: { 
             search: currentSearch,
             page: currentPage,
@@ -168,7 +168,7 @@ const DataViewer = () => {
       const newCounts = {};
       for (const table of tables) {
         try {
-          const response = await axios.get(`https://tellicheri.onrender.com/api/import/${table.key}`, { 
+          const response = await axios.get(`http://localhost:5000/api/import/${table.key}`, { 
             params: { limit: 1 } 
           });
           newCounts[table.key] = response.data.count || response.data.data?.length || 0;
@@ -329,7 +329,7 @@ const DataViewer = () => {
                       <Button 
                         variant="outline-info" 
                         size="sm"
-                        onClick={() => window.location.href = `https://tellicheri.onrender.com/admin/tools/import`}
+                        onClick={() => window.location.href = `http://localhost:5000/admin/tools/import`}
                       >
                         Import More
                       </Button>

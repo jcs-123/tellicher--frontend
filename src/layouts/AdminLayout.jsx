@@ -20,7 +20,7 @@ const AdminLayout = ({ children }) => {
   const handleLogout = async () => {
     try {
       if (username) {
-        await axios.post('https://tellicheri.onrender.com/api/auth/logout', { username });
+        await axios.post('http://localhost:5000/api/auth/logout', { username });
       }
     } catch (err) {
       console.error('Logout log failed:', err);
@@ -36,7 +36,7 @@ const AdminLayout = ({ children }) => {
     }
 
     try {
-      await axios.put(`https://tellicheri.onrender.com/api/users/by-username/${username}/password`, {
+      await axios.put(`http://localhost:5000/api/users/by-username/${username}/password`, {
         newPassword
       });
       toast.success("Password changed successfully!");

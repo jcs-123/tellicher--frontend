@@ -39,7 +39,7 @@ const AdminList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch('https://tellicheri.onrender.com/api/administration');
+                const res = await fetch('http://localhost:5000/api/administration');
                 if (!res.ok) throw new Error('Failed to fetch data');
                 const data = await res.json();
                 setAdministrationData(data);
@@ -78,7 +78,7 @@ const AdminList = () => {
             formData.append('image', selectedFile);
             formData.append('id', selectedItem._id);
 
-            const response = await fetch('https://tellicheri.onrender.com/api/upload-image', {
+            const response = await fetch('http://localhost:5000/api/upload-image', {
                 method: 'POST',
                 body: formData,
             });

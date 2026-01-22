@@ -52,7 +52,7 @@ const WebsiteLinks = () => {
   const fetchLinks = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get('https://tellicheri.onrender.com/api/website-links');
+      const res = await axios.get('http://localhost:5000/api/website-links');
       setLinks(res.data);
     } catch (error) {
       console.error('Error fetching links:', error);
@@ -90,14 +90,14 @@ const WebsiteLinks = () => {
     try {
       setIsLoading(true);
       if (editMode) {
-        await axios.put(`https://tellicheri.onrender.com/api/website-links/${editId}`, {
+        await axios.put(`http://localhost:5000/api/website-links/${editId}`, {
           title,
           pageType,
           webLink,
           status: 'Active',
         });
       } else {
-        await axios.post('https://tellicheri.onrender.com/api/website-links', formData, {
+        await axios.post('http://localhost:5000/api/website-links', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       }
@@ -129,7 +129,7 @@ const WebsiteLinks = () => {
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`https://tellicheri.onrender.com/api/website-links/${deleteId}`);
+      await axios.delete(`http://localhost:5000/api/website-links/${deleteId}`);
       setShowDeleteModal(false);
       fetchLinks();
       // Adjust current page if the last item on the current page was deleted

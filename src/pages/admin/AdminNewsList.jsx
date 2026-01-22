@@ -24,7 +24,7 @@ const AdminNewsList = () => {
     const [selectedNews, setSelectedNews] = useState(null);
 
     useEffect(() => {
-        axios.get('https://tellicheri.onrender.com/api/news')
+        axios.get('http://localhost:5000/api/news')
             .then((res) => {
                 setNews(res.data);
                 setFiltered(res.data);
@@ -89,7 +89,7 @@ const AdminNewsList = () => {
 
     const handlePublish = async (id) => {
         try {
-            const res = await axios.put(`https://tellicheri.onrender.com/api/news/${id}/publish`);
+            const res = await axios.put(`http://localhost:5000/api/news/${id}/publish`);
             const updated = filtered.map(n => (n._id === id ? res.data.news : n));
             setFiltered(updated);
             toast.success('✅ News published successfully!');
@@ -349,7 +349,7 @@ const AdminNewsList = () => {
                                                 <strong>Image:</strong>
                                                 <div className="ratio ratio-16x9 bg-light mt-2">
                                                     <img
-                                                        src={`https://tellicheri.onrender.com/uploads/${selectedNews.image}`}
+                                                        src={`http://localhost:5000/uploads/${selectedNews.image}`}
                                                         alt="news"
                                                         className="img-fluid object-fit-contain"
                                                     />
@@ -360,7 +360,7 @@ const AdminNewsList = () => {
                                             <div className="mb-2">
                                                 <strong>PDF File:</strong><br />
                                                 <a
-                                                    href={`https://tellicheri.onrender.com/uploads/${selectedNews.file}`}
+                                                    href={`http://localhost:5000/uploads/${selectedNews.file}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="btn btn-outline-primary btn-sm mt-2"

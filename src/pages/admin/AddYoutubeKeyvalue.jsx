@@ -19,7 +19,7 @@ const AddYoutubeKeyvalue = () => {
     }
 
     try {
-      const res = await axios.post('https://tellicheri.onrender.com/api/youtube/update', { keyvalue });
+      const res = await axios.post('http://localhost:5000/api/youtube/update', { keyvalue });
 
       if (res.data.success) {
         toast.success('✅ YouTube key updated successfully!');

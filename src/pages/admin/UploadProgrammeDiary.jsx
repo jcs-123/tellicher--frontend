@@ -21,7 +21,7 @@ const UploadProgrammeDiary = () => {
     formData.append('pdf', file);
 
     try {
-      const res = await axios.post('https://tellicheri.onrender.com/api/programme-diary/upload', formData, {
+      const res = await axios.post('http://localhost:5000/api/programme-diary/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
