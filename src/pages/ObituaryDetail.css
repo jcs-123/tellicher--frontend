@@ -1,0 +1,24 @@
+.obituary-detail {
+  background: #fff;
+}
+
+.obituary-photo {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.obituary-line {
+  display: flex;
+  padding: 6px 0;
+  border-bottom: 1px dashed #b56b6b;
+}
+
+.obituary-line .label {
+  width: 200px;
+  font-weight: 600;
+  color: #b30000;
+}
+
+.obituary-line .value {
+  flex: 1;
+}

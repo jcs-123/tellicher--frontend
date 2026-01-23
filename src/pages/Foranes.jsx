@@ -174,7 +174,7 @@ const Foranes = () => {
 
                       <p>
                         <strong>Established:</strong>{" "}
-                        {estb_date || "N/A"}
+                        {estb_date ? new Date(estb_date).toLocaleDateString('en-US') : "N/A"}
                       </p>
 
                       <p className="fst-italic">
