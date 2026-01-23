@@ -31,7 +31,7 @@ const UserUpdates = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await axios.get('http://localhost:5000/api/logs', { params: filters });
+      const res = await axios.get('https://tellicheri.onrender.com/api/logs', { params: filters });
       setLogs(res.data);
     } catch (err) {
       console.error('Error fetching logs:', err);
@@ -44,7 +44,7 @@ const UserUpdates = () => {
   // Fetch user list
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users');
+      const res = await axios.get('https://tellicheri.onrender.com/api/users');
       setUsers(res.data);
     } catch (err) {
       console.error('Error fetching users:', err);

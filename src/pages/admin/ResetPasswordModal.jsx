@@ -16,7 +16,7 @@ const ResetPasswordModal = ({ onClose }) => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/users/by-username/${username}/password`, {
+      const res = await axios.put(`https://tellicheri.onrender.com/api/users/by-username/${username}/password`, {
         newPassword,
       });
 

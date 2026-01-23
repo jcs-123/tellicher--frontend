@@ -7,7 +7,7 @@ import SideNavAdmin from "../components/SideNavAdmin";
 import SafeEnvironmentPDF from "../assets/Safe Environment Draft.pdf";
 import "./OtherCommittees.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 const COMMITTEE_SECTIONS = [
   "Safe Enviornment Committee",

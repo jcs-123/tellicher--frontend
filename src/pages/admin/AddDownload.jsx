@@ -39,7 +39,7 @@ const AddDownload = () => {
       data.append('displayOrder', formData.displayOrder);
       data.append('status', formData.status);
 
-      const res = await axios.post('http://localhost:5000/api/downloads', data, {
+      const res = await axios.post('https://tellicheri.onrender.com/api/downloads', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

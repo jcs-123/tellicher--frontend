@@ -49,7 +49,7 @@ const BulletinList = () => {
     const fetchBulletins = async () => {
         try {
             setIsLoading(true);
-            const res = await axios.get('http://localhost:5000/api/bulletins');
+            const res = await axios.get('https://tellicheri.onrender.com/api/bulletins');
 
             const data = res.data;
 
@@ -152,7 +152,7 @@ const BulletinList = () => {
         e.preventDefault();
         setIsProcessing(true);
         try {
-            await axios.put(`http://localhost:5000/api/bulletins/${selectedBulletin._id}`, editFormData);
+            await axios.put(`https://tellicheri.onrender.com/api/bulletins/${selectedBulletin._id}`, editFormData);
             fetchBulletins();
             closeModals();
         } catch (error) {
@@ -165,7 +165,7 @@ const BulletinList = () => {
     const handleDelete = async () => {
         setIsProcessing(true);
         try {
-            await axios.delete(`http://localhost:5000/api/bulletins/${selectedBulletin._id}`);
+            await axios.delete(`https://tellicheri.onrender.com/api/bulletins/${selectedBulletin._id}`);
             fetchBulletins(); // Refresh the list
             closeModals();
         } catch (error) {
@@ -179,7 +179,7 @@ const BulletinList = () => {
     const handlePublish = async (bulletinId) => {
         setIsProcessing(true);
         try {
-            await axios.put(`http://localhost:5000/api/bulletins/${bulletinId}`, {
+            await axios.put(`https://tellicheri.onrender.com/api/bulletins/${bulletinId}`, {
                 status: 'Published'
             });
             fetchBulletins();
@@ -535,7 +535,7 @@ const BulletinList = () => {
                             <div className="mb-3">
                                 <h6 className="fw-bold">Cover Image</h6>
                                 <img
-                                    src={`http://localhost:5000${selectedBulletin.coverImageUrl}`}
+                                    src={`https://tellicheri.onrender.com${selectedBulletin.coverImageUrl}`}
                                     alt="Cover"
                                     className="img-fluid rounded"
                                     style={{ maxHeight: '200px' }}
@@ -545,7 +545,7 @@ const BulletinList = () => {
                             <div className="mb-3">
                                 <h6 className="fw-bold">File</h6>
                                 <a
-                                    href={`http://localhost:5000${selectedBulletin.fileUrl}`}
+                                    href={`https://tellicheri.onrender.com${selectedBulletin.fileUrl}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="btn btn-outline-primary"

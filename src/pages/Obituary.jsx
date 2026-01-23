@@ -15,7 +15,7 @@ import axios from "axios";
 import SideNavObituary from "../components/SideNavPriests";
 import "./Obituary.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 /* ===============================
    STATIC DATA — BEFORE 2020

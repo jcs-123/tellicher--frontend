@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import SideNavParish from "../components/SideNavParish";
 import "./Foranes.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 /* ===============================
    STRONG NORMALIZE (SAFE MATCH)

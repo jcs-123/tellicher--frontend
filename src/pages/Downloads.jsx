@@ -26,7 +26,7 @@ const Downloads = () => {
 
   const fetchDownloads = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/downloads');
+      const res = await axios.get('https://tellicheri.onrender.com/api/downloads');
       setDownloads(res.data);
       setFilteredDownloads(res.data);
       setError(null);
@@ -138,7 +138,7 @@ const Downloads = () => {
                             <div className="download-footer mt-auto">
                               <small className="text-muted">{fileType.toUpperCase()}</small>
                               <motion.a
-                                href={`http://localhost:5000${item.fileUrl}`}
+                                href={`https://tellicheri.onrender.com${item.fileUrl}`}
                                 download
                                 whileHover={{ scale: 1.05 }}
                                 className="download-btn"

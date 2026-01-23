@@ -22,10 +22,10 @@ import SideNavPriests from "../components/SideNavPriests";
 import "./Priests.css";
 
 const API_BASE =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com/api/import";
 
 const UPLOAD_BASE = API_URL.replace("/api/import", "");
 

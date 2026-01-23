@@ -18,7 +18,7 @@ const ArchdiocesanPriests = () => {
   const fetchPriests = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/import/priests', {
+      const res = await axios.get('https://tellicheri.onrender.com/api/import/priests', {
         params: { search },
       });
       if (res.data.success) {

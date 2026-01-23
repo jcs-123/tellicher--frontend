@@ -18,7 +18,7 @@ const GalleryDetail = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get(`http://localhost:5000/api/gallery/${id}`);
+        const response = await axios.get(`https://tellicheri.onrender.com/api/gallery/${id}`);
         setGallery(response.data);
       } catch (err) {
         console.error('Error fetching gallery:', err);
@@ -158,7 +158,7 @@ const GalleryDetail = () => {
                     >
                       <div className="image-container">
                         <Image
-                          src={`http://localhost:5000${url}`}
+                          src={`https://tellicheri.onrender.com${url}`}
                           className="gallery-image"
                           alt={`Gallery image ${idx + 1}`}
                           onError={handleImageError}

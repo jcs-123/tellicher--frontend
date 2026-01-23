@@ -54,7 +54,7 @@ const Home = () => {
     nextArrow: <NextArrow />,
   };
   useEffect(() => {
-    axios.get('http://localhost:5000/api/youtube')
+    axios.get('https://tellicheri.onrender.com/api/youtube')
       .then(res => {
         if (res.data && res.data.keyvalue) {
           setYoutubeKey(res.data.keyvalue);
@@ -67,7 +67,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/news/flash-news')
+    axios.get('https://tellicheri.onrender.com/api/news/flash-news')
       .then(res => {
         setFlashNews([res.data]); // wrap in array for compatibility
       })
@@ -77,7 +77,7 @@ const Home = () => {
 
   // Inside Home.jsx
   useEffect(() => {
-    axios.get("http://localhost:5000/api/home-video")
+    axios.get("https://tellicheri.onrender.com/api/home-video")
       .then(res => {
         console.log("✅ API response:", res.data);
         if (res.data?.video?.url) {
@@ -128,7 +128,7 @@ const Home = () => {
 
                     {item.file && (
                       <a
-                        href={`http://localhost:5000/uploads/${item.file}`}
+                        href={`https://tellicheri.onrender.com/uploads/${item.file}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

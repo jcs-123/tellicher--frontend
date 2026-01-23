@@ -15,7 +15,7 @@ const PastoralCouncil = () => {
   useEffect(() => {
     const fetchCouncil = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/pastoralCouncil');
+        const { data } = await axios.get('https://tellicheri.onrender.com/api/pastoralCouncil');
         setCouncilData(data);
         console.log(councilData);
         

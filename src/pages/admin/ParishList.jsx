@@ -22,7 +22,7 @@ const ParishList = () => {
   const fetchParishes = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/parishes');
+      const res = await axios.get('https://tellicheri.onrender.com/api/parishes');
       setParishData(res.data);
     } catch (error) {
       console.error('Error fetching parish data:', error);

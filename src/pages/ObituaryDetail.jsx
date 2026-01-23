@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import SideNavPriests from "../components/SideNavPriests";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 const ObituaryDetail = () => {
   const { id } = useParams(); // MongoDB _id

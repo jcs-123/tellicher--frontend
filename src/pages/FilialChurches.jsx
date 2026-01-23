@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SideNavParish from "../components/SideNavParish";
 import "./Parishes.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 const FilialChurches = () => {
   const [filialChurches, setFilialChurches] = useState([]);

@@ -27,7 +27,7 @@ const CircularList = () => {
 
   const fetchCirculars = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/circulars');
+      const res = await axios.get('https://tellicheri.onrender.com/api/circulars');
       setCirculars(res.data);
     } catch (err) {
       console.error('Error fetching circulars:', err);
@@ -42,7 +42,7 @@ const CircularList = () => {
       isActive: circular.isActive,
       file: null
     });
-    setFilePreview(circular.fileUrl ? `http://localhost:5000${circular.fileUrl}` : '');
+    setFilePreview(circular.fileUrl ? `https://tellicheri.onrender.com${circular.fileUrl}` : '');
     setShowEditModal(true);
   };
 
@@ -71,7 +71,7 @@ const CircularList = () => {
       }
 
       await axios.put(
-        `http://localhost:5000/api/circulars/${currentCircular._id}`,
+        `https://tellicheri.onrender.com/api/circulars/${currentCircular._id}`,
         formData,
         {
           headers: {
@@ -89,7 +89,7 @@ const CircularList = () => {
 
   const toggleStatus = async (id, currentStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/circulars/${id}`, {
+      await axios.put(`https://tellicheri.onrender.com/api/circulars/${id}`, {
         isActive: !currentStatus
       });
       fetchCirculars();
@@ -189,7 +189,7 @@ const CircularList = () => {
                           variant="link"
                           size="sm"
                           className="text-danger"
-                          onClick={() => window.open(`http://localhost:5000${item.fileUrl}`, '_blank')}
+                          onClick={() => window.open(`https://tellicheri.onrender.com${item.fileUrl}`, '_blank')}
                         >
                           <FaDownload /> Download
                         </Button>

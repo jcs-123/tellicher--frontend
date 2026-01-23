@@ -18,7 +18,7 @@ const PhotoGallery = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get('http://localhost:5000/api/gallery?type=Image&status=Published');
+        const response = await axios.get('https://tellicheri.onrender.com/api/gallery?type=Image&status=Published');
         setGalleryItems(response.data);
       } catch (err) {
         console.error('Error fetching gallery:', err);
@@ -178,7 +178,7 @@ const PhotoGallery = () => {
                                 whileHover={imageHoverEffect}
                               >
                                 <Image
-                                  src={`http://localhost:5000${galleryItem.thumbnailUrl}`}
+                                  src={`https://tellicheri.onrender.com${galleryItem.thumbnailUrl}`}
                                   className="gallery-image"
                                   alt={galleryItem.title}
                                   onError={handleImageError}

@@ -12,7 +12,7 @@ import axios from "axios";
 import SideNavAdmin from "../components/SideNavAdmin";
 import "./PresbyteralCouncil.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://tellicheri.onrender.com";
 
 const PresbyteralCouncil = () => {
     const navigate = useNavigate();

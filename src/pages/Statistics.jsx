@@ -10,7 +10,7 @@ const Statistics = () => {
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/statistics");
+        const { data } = await axios.get("https://tellicheri.onrender.com/api/statistics");
         setStatisticsData(data);
       } catch (error) {
         console.error("Error fetching statistics:", error);

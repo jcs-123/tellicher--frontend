@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./ArcheparchialTribunal.css";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api/import";
+  import.meta.env.VITE_API_URL || "https://tellicheri.onrender.com/api/import";
 
 const SECTION_NAME = "Archeparchial Tribunal";
 
